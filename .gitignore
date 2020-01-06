@@ -1,1 +1,10 @@
+/bin/
+/cmake/
+/contrib/
+/include/
+/lib/
 /lib64/
+/share/
+/venv/
+
+
