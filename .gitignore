@@ -2,6 +2,7 @@
 /cmake/
 /contrib/
 /include/
+include
 /lib/
 /lib64/
 /share/
