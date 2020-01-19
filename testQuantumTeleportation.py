@@ -7,6 +7,7 @@ from qiskit import IBMQ
 from qiskit.circuit import QuantumRegister, QuantumCircuit, Qubit, ClassicalRegister
 from qiskit import (Aer, execute)
 from qiskit.visualization import plot_histogram
+from datetime import datetime
 
 mpl.use('TkAgg')
 
@@ -22,7 +23,7 @@ def show_figure(fig):
 ''' Transform the computational basis in to the Bell basis'''
 
 
-def compToBellBasis(q, *c):
+def comp_to_bell_basis(q, *c):
     circuit = QuantumCircuit(q, *c)
     circuit.h(q[1])
     circuit.cx(q[1], q[0])
@@ -30,7 +31,7 @@ def compToBellBasis(q, *c):
     return circuit
 
 
-def stateVectorToString(vector, places=3):
+def state_vector_to_string(vector, places=3):
     s = ""
     count = 0
     for i in range(len(vector)):
@@ -45,11 +46,11 @@ def stateVectorToString(vector, places=3):
     return s
 
 
-def testBellBasis():
+def test_bell_basis():
     backend = Aer.get_backend('statevector_simulator')
     for x in range(4):
         q = QuantumRegister(2, "q")
-        transform_circuit = compToBellBasis(q)
+        transform_circuit = comp_to_bell_basis(q)
         init_circuit = QuantumCircuit(q)
         initial_state = np.zeros(4, dtype=complex)
         initial_state[x] = 1.0
@@ -59,12 +60,12 @@ def testBellBasis():
         job = execute(circuit, backend)
         out = job.result().get_statevector()
 
-        print("|" + format(x, '02b') + ">" + " ---->" + stateVectorToString(out))
+        print("|" + format(x, '02b') + ">" + " ---->" + state_vector_to_string(out))
 
 
 ''' Main Program '''
-# testBellBasis()
 
+# testBellBasis()
 q = QuantumRegister(3, "q")
 c0 = ClassicalRegister(1, "c0")
 c1 = ClassicalRegister(1, "c1")
@@ -76,7 +77,7 @@ init_state[0] = 1.0
 init_circuit.initialize(init_state, [q[0], q[1], q[2]])
 
 ' Build the Teleportation Circuit '
-tc = compToBellBasis(q, c0, c1)
+tc = comp_to_bell_basis(q, c0, c1)
 tc.barrier()
 tc.cx(q[1], q[2])
 tc.h(q[1])
@@ -92,15 +93,17 @@ mc.measure(q[0], c2[0])
 circuit = tc + mc
 
 ' Set up Quantum Computer '
+start_time = datetime.now()
 backend = Aer.get_backend('qasm_simulator')
 job = execute(circuit, backend, shots=1024)
 result = job.result()
 counts = result.get_counts()
+end_time = datetime.now()
+print('Duration of job: {}'.format(end_time - start_time))
 
 ' Plot the results '
 plot_histogram(counts);
 show_figure(plot_histogram(result.get_counts(circuit)))
-show_figure()
 
 ' Misc '
 prep = QuantumCircuit(q)
@@ -113,4 +116,3 @@ result = job.result()
 counts = result.get_counts()
 plot_histogram(counts);
 show_figure(plot_histogram(result.get_counts(circuit)))
-show_figure()
