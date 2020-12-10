@@ -12,7 +12,7 @@ def show_figure(fig):
     new_mngr = new_fig.canvas.manager
     new_mngr.canvas.figure = fig
     fig.set_canvas(new_mngr.canvas)
-    plt.show(fig)
+    plt.show()
 
 
 # Use Aer
@@ -37,7 +37,7 @@ show_figure(diagram)
 
 # Execute the circuit on the QASM Simulator
 start_time = datetime.now()
-job = execute(circuit, simulator, shots=100000)
+job = execute(circuit, simulator, shots=1000)
 end_time = datetime.now()
 print('Duration: {}'.format(end_time - start_time))
 
