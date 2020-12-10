@@ -17,7 +17,7 @@ def show_figure(fig):
     new_mngr = new_fig.canvas.manager
     new_mngr.canvas.figure = fig
     fig.set_canvas(new_mngr.canvas)
-    plt.show(fig)
+    plt.show()
 
 
 ''' Transform the computational basis in to the Bell basis'''
