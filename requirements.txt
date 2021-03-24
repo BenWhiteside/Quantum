@@ -56,7 +56,7 @@ qiskit-terra==0.9.0
 Quandl==3.4.8
 requests==2.22.0
 requests-ntlm==1.1.0
-rsa==4.0
+rsa==4.1
 scikit-learn==0.21.3
 scipy==1.3.1
 six==1.12.0
