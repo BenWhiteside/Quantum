@@ -5,7 +5,7 @@ cffi==1.12.3
 chardet==3.0.4
 cirq==0.6.0
 cryptography==2.7
-cvxopt==1.2.3
+cvxopt==1.2.7
 cycler==0.10.0
 dataclasses==0.7
 decorator==4.4.0
